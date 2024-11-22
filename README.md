@@ -93,7 +93,7 @@ in your Backend & Frontend (while logged in as Admin).
 When click on this button, the Power Toys Panel will open 
 displaying the Image Optimization Toy.
 
-* [See Manual for more details](https://www.jajuma.de/sites/default/files/ckfinder/userfiles/images/jajuma-develop/power-toys-magento/JaJuMa_Image_Optimization_Power_Toy_Manual_v001.pdf)
+* [See Manual for more details](https://www.jajuma.de/media/wysiwyg/jajuma-develop/power-toys-for-magento-2/manuals/JaJuMa_Image_Optimization_Reports_Power_Toy_Manual_v001.pdf)
 
 
 ## License
