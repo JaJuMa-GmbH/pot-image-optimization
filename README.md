@@ -30,6 +30,21 @@ This Dashboard Toy shows:
 * Savings with WebP in percent and amount of data compared to original images
 * Savings with AVIF in percent and amount of data compared to original images
 
+## Screenshots
+
+<td>
+    <table>
+     <tr>
+        <td><b>Image Optimization Reports Toy</b><br>Dark Mode</td>
+        <td><b>Image Optimization Reports Toy</b><br>Light Mode</td>
+     </tr>
+     <tr>
+       <td><img src="https://www.jajuma.de/media/wysiwyg/jajuma-develop/power-toys-magento/screenshots/Magento-Image-Optimization-Report-Power-Toy-Dark.jpg"></td>
+       <td><img src="https://www.jajuma.de/media/wysiwyg/jajuma-develop/power-toys-magento/screenshots/Magento-Image-Optimization-Report-Power-Toy-Light.jpg"></td>
+    </tr>
+    </table>
+</td>
+
 ## Requirements
 
 <div align="left">
@@ -58,10 +73,6 @@ This Dashboard Toy shows:
 * [Magento Power Toys Demo on Luma Theme](https://www.jajuma.de/en/jajuma-shop/demo-shop-with-magento-2)
 * [Magento Power Toys Demo on Hyvä Theme](https://www.jajuma.de/en/jajuma-shop/demo-shop-with-magento-2-and-hyva-themes)
 * [Magento Power Toys Demo on Mage-OS](https://www.jajuma.de/en/jajuma-shop/demo-shop-with-mage-os-and-hyva-themes)
-
-## Screenshots
-
-Coming Soon...
 
 ## Installation
 
