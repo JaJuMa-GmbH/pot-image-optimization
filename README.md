@@ -3,7 +3,7 @@
 <img align="right" width="35%" height="auto" src="https://www.jajuma.de/media/wysiwyg/jajuma-develop/power-toys-magento/JaJuMa-Image-Optimization-Power-Toy-For-Magento-2-small.png">  
 
 Image Optimization Power Toy for Magento 2 by [JaJuMa](https://www.jajuma.de/en) is a dashboard toy 
-showing the image optimization status and savings through image optimization in your Magento store with [Ultimage Image Optimizer](https://www.jajuma.de/en/jajuma-develop/extensions/ultimate-image-optimizer-extension-for-magento-2).
+showing the image optimization status and savings through image optimization in your Magento store with [Ultimate Image Optimizer](https://www.jajuma.de/en/jajuma-develop/extensions/ultimate-image-optimizer-extension-for-magento-2).
 
 Compatible with
 
