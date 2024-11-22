@@ -1,0 +1,283 @@
+<?php
+
+/** @var ImageOptimization $block * */
+
+/** @var Escaper $escaper */
+
+use Jajuma\ImageOptimizerUltimate\Model\Config\Source\Status;
+use Jajuma\PotImageOptimization\Block\ImageOptimization;
+use Jajuma\PowerToys\Helper\Data;
+use Magento\Framework\Escaper;
+
+/** @var Data $powerToysHelper * */
+$powerToysHelper = $this->helper(Data::class);
+$viewModel = $block->getViewModel();
+$sectionLoadUrl = $escaper->escapeUrl($block->getUrl('jajuma_powertoys/html/load'));
+$successContent = $viewModel->getProgressBarContent(Status::SUCCESS);
+$pendingContent = $viewModel->getProgressBarContent(Status::PENDING);
+$errorContent = $viewModel->getProgressBarContent(Status::ERROR);
+$savingData = $viewModel->getFileSizeSavingsMb();
+?>
+
+<div class="powertoys-quick-optimization-wrapper" wire:loading.class="loading" id="powertoys-quick-optimization-wrapper">
+    <span class="powertoys-widget-title title-transparent"><?= $block->getName() ?></span>
+    <?php if ($block->isParentEnable()): ?>
+        <div id="<?= $block->getBlockId() ?>-wrapper">
+            <div class="uio-toy-section">
+                <div class="uio progress-bars">
+                    <?php if ($pendingContent) : ?>
+                        <div class="uio progress-bar progress-bar-pending" role="progressbar" data-toggle="tooltip" title="<?= $pendingContent ?>">
+                            <div class="progress-bar-content">
+                                <?= $pendingContent ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($successContent) : ?>
+                        <div class="uio progress-bar progress-bar-success" role="progressbar" data-toggle="tooltip" title="<?= $successContent ?>">
+                            <div class="progress-bar-content">
+                                <?= $successContent ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($errorContent) : ?>
+                        <div class="uio progress-bar progress-bar-error" role="progressbar" data-toggle="tooltip" title="<?= $errorContent ?>">
+                            <div class="progress-bar-content">
+                                <?= $errorContent ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php if (count($savingData)) : ?>
+                <div class="uio-toy-section">
+                    <span><?= 'Savings' ?></span>
+                    <div class="saving-images-data">
+                        <?php if (empty($savingData['optimize_size'])) : ?>
+                            <?php $savingData['optimize_size'] = 0 ?>
+                        <?php endif; ?>
+                        <div class="saving-item">
+                            <span class="saving-item-title"><?= 'Webp' ?></span>
+                            <?php if ($savingData['number'] != 0) : ?>
+                                <div class="saving-item-numbers">
+                                    <span><b>&#8709;&nbsp;</b><?= round(((float)$savingData['webp_percent'] / $savingData['number'])); ?>%</span>
+                                    <span>
+                                        <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12.006 7.42729V15.043M12.006 15.043L8.62126 11.6583M12.006 15.043L15.3908 11.6583M6.08268 18.4278C4.87481 18.4291 3.70603 17.9998 2.78625 17.2168C1.86647 16.4339 1.25594 15.3487 1.06431 14.1561C0.872685 12.9636 1.11251 11.7417 1.74072 10.7101C2.36892 9.6784 3.34435 8.9045 4.49184 8.52734C4.19703 7.01679 4.50172 5.45081 5.3414 4.161C6.18108 2.87119 7.48981 1.95884 8.99044 1.61716C10.4911 1.27547 12.0658 1.53127 13.3811 2.3304C14.6964 3.12953 15.6491 4.40922 16.0373 5.8985C16.6375 5.70328 17.2804 5.6798 17.8933 5.83069C18.5062 5.98158 19.0647 6.30084 19.5057 6.75241C19.9467 7.20398 20.2527 7.76987 20.389 8.38615C20.5254 9.00244 20.4867 9.64458 20.2773 10.24C21.2009 10.5928 21.972 11.2578 22.4566 12.1197C22.9412 12.9815 23.1089 13.9857 22.9305 14.9583C22.7522 15.9308 22.239 16.8102 21.4801 17.4439C20.7211 18.0777 19.7643 18.4257 18.7756 18.4278H6.08268Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                        <?= $viewModel->convertToReadableSize((float)$savingData['origin_size'] - (float)$savingData['optimize_size']) ?></span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php if (empty($savingData['avif_optimize_size'])) : ?>
+                            <?php $savingData['avif_optimize_size'] = 0 ?>
+                        <?php endif; ?>
+                        <div class="saving-item">
+                            <span class="saving-item-title"><?= 'Avif' ?></span>
+                            <?php if ($savingData['number'] != 0) : ?>
+                                <div class="saving-item-numbers">
+                                    <span><b>&#8709;&nbsp;</b><?= round(((float)$savingData['avif_percent'] / $savingData['number']));  ?>%</span>
+                                    <span>
+                                        <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12.006 7.42729V15.043M12.006 15.043L8.62126 11.6583M12.006 15.043L15.3908 11.6583M6.08268 18.4278C4.87481 18.4291 3.70603 17.9998 2.78625 17.2168C1.86647 16.4339 1.25594 15.3487 1.06431 14.1561C0.872685 12.9636 1.11251 11.7417 1.74072 10.7101C2.36892 9.6784 3.34435 8.9045 4.49184 8.52734C4.19703 7.01679 4.50172 5.45081 5.3414 4.161C6.18108 2.87119 7.48981 1.95884 8.99044 1.61716C10.4911 1.27547 12.0658 1.53127 13.3811 2.3304C14.6964 3.12953 15.6491 4.40922 16.0373 5.8985C16.6375 5.70328 17.2804 5.6798 17.8933 5.83069C18.5062 5.98158 19.0647 6.30084 19.5057 6.75241C19.9467 7.20398 20.2527 7.76987 20.389 8.38615C20.5254 9.00244 20.4867 9.64458 20.2773 10.24C21.2009 10.5928 21.972 11.2578 22.4566 12.1197C22.9412 12.9815 23.1089 13.9857 22.9305 14.9583C22.7522 15.9308 22.239 16.8102 21.4801 17.4439C20.7211 18.0777 19.7643 18.4257 18.7756 18.4278H6.08268Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                        <?= $viewModel->convertToReadableSize((float)$savingData['origin_size'] - (float)$savingData['avif_optimize_size']) ?></span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <a class="no-parent-module" target="blank" href="https://www.jajuma.de/en/jajuma-develop/extensions/ultimate-image-optimizer-extension-for-magento-2">
+            <img alt="Image Optimizer Extension" src="<?= $block->getViewFileUrl('Jajuma_PotImageOptimization::images/parent-module-image.png') ?>"/>
+            <?= 'Please install and enable' ?><br>
+            <?= 'Image Optimizer Extension' ?>
+        </a>
+    <?php endif; ?>
+    <div id="pot-uio-img"></div>
+</div>
+<style>
+    .widget-item.widget-item-image-optimization {
+        background: #344f80 !important;
+        overflow: hidden;
+        color: #3c3c3c;
+        width: 240px;
+        position: relative;
+    }
+
+    .jajumaLightMode .powertoys-dashboard-widgets .widget-item-image-optimization {
+        box-shadow: 1px 1px 5px 0px rgb(0 0 0 / 31%);
+    }
+
+    .powertoys-quick-optimization-wrapper .powertoys-widget-title {
+        z-index: 2;
+        position: relative;
+    }
+
+    #image-optimization-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: relative;
+        z-index: 2;
+    }
+
+    #image-optimization-wrapper .uio-toy-section {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    #image-optimization-wrapper .uio-toy-section>span {
+        text-align: center;
+        color: #fff;
+    }
+
+    #image-optimization-wrapper .uio.progress-bars {
+        display: flex;
+        flex-direction: row;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    #image-optimization-wrapper .uio.progress-bars .progress-bar {
+        display: inline-flex;
+        padding: 1px 0;
+        justify-content: space-between;
+        border: none;
+        line-height: 20px;
+        color: #fff;
+        position: relative;
+        cursor: pointer;
+        transition: .3s ease all;
+    }
+
+    #image-optimization-wrapper .uio.progress-bars .progress-bar .progress-bar-content {
+        font-size: 12px;
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
+        padding: 0 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #image-optimization-wrapper .uio.progress-bars:hover .progress-bar {
+        width: 0;
+    }
+
+    #image-optimization-wrapper .uio.progress-bars .progress-bar:hover {
+        width: 100%;
+    }
+
+    #image-optimization-wrapper .uio.progress-bars .progress-bar-success {
+        background: #5ECA75;
+        width: <?= $viewModel->getProgressWidthByStatus(Jajuma\ImageOptimizerUltimate\Model\Config\Source\Status::SUCCESS) ?>;
+    }
+
+    #image-optimization-wrapper .uio.progress-bars .progress-bar-pending {
+        background: #F3A73B;
+        width: <?= $viewModel->getProgressWidthByStatus(Jajuma\ImageOptimizerUltimate\Model\Config\Source\Status::PENDING) ?>;
+    }
+
+    #image-optimization-wrapper .uio.progress-bars .progress-bar-error {
+        background: #ED5C4C;
+        width: <?= $viewModel->getProgressWidthByStatus(Jajuma\ImageOptimizerUltimate\Model\Config\Source\Status::ERROR) ?>;
+    }
+
+    #image-optimization-wrapper .saving-images-data {
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        gap: 8px;
+        justify-content: space-between;
+        line-height: 20px;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    #image-optimization-wrapper .saving-images-data .saving-item {
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: #0000008a;
+        padding: 6px 8px;
+        border-radius: 8px;
+        width: 100%;
+        gap: 2px;
+    }
+
+    #image-optimization-wrapper .saving-images-data .saving-item .saving-item-title {
+        color: #fff;
+        text-align: center;
+        margin-bottom: 2px;
+    }
+
+    #image-optimization-wrapper .saving-images-data .saving-item .saving-item-numbers {
+        display: flex;
+        flex-direction: column;
+        color: #5ECA75;
+        text-align: left;
+        font-size: 16px;
+        gap: 2px;
+    }
+
+    #image-optimization-wrapper .saving-images-data .saving-item .saving-item-numbers svg {
+        width: 12px;
+    }
+
+    #image-optimization-wrapper .saving-images-data .saving-item .saving-item-numbers b {
+        font-size: 14px;
+    }
+
+    #image-optimization-wrapper .saving-images-data .saving-item .saving-item-numbers span:last-child {
+        display: flex;
+        gap: 4px;
+    }
+
+    #pot-uio-img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyNy41LjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8Zz4NCgk8cGF0aCBkPSJNNDQ4LDE3OS4yYzM1LjM1LDAsNjQtMjguNjUsNjQtNjRzLTI4LjY1LTY0LTY0LTY0cy02NCwyOC42NS02NCw2NFM0MTIuNjUsMTc5LjIsNDQ4LDE3OS4yeiBNNDQuNzIsNDYwLjhoMjYwLjE2aDYwaDk4LjI0DQoJCWMyNy4wNCwwLDQ4Ljg4LTIxLjkyLDQ4Ljg4LTQ4Ljg4YzAtOC45Ni0yLjQ4LTE3Ljc2LTcuMTItMjUuNDRsLTEwNS42LTE3My4wNGMtMy4yOC01LjM2LTkuMDQtOC42NC0xNS4yOC04LjY0DQoJCXMtMTIsMy4yOC0xNS4yOCw4LjU2bC0zOC41Niw2My4yTDIyOS40NCwxMTZjLTUuMjgtOC40OC0xNC42NC0xMy42LTI0LjY0LTEzLjZzLTE5LjI4LDUuMTItMjQuNjQsMTMuNkw2Ljg4LDM5Mi4zMg0KCQlDMi40LDM5OS40NCwwLDQwNy42OCwwLDQxNi4wOEMwLDQ0MC44LDIwLDQ2MC44LDQ0LjcyLDQ2MC44eiIvPg0KPC9nPg0KPC9zdmc+DQo=);
+        background-size: cover;
+        background-position: center;
+        top: 0;
+        left: 0;
+        opacity: .15;
+        z-index: 1;
+        background-size: contain;
+        background-repeat: no-repeat;
+        filter: invert(1);
+    }
+
+    /* No parent extension */
+
+    .powertoys-quick-optimization-wrapper .no-parent-module img {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        transition: .3s ease transform;
+    }
+
+    .powertoys-quick-optimization-wrapper .no-parent-module:hover img {
+        transform: translateY(-3px);
+    }
+
+    .powertoys-quick-optimization-wrapper .no-parent-module {
+        z-index: 2;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        position: relative;
+    }
+
+</style>
